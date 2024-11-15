@@ -17,59 +17,59 @@ React Project structure: https://github.com/alan2207/bulletproof-react/blob/mast
 ## Primary Brand Colors
 
 <div style="background-color: #50C878">
-Green
+Green (#50C878)
 </div>
 
 <div style="background-color: #FB9A54">
-Orange
+Orange (#FB9A54)
 </div>
 
 <div style="background-color: #00C5FF">
-Blue
+Blue (#00C5FF)
 </div>
 
 ## Complementary Brand Colors
 
 <div style="background-color: #2D8F4E">
-Dark Green
+Dark Green (#2D8F4E)
 </div>
 
 <div style="background-color: #73D393">
-Lighter Green
+Lighter Green (#73D393)
 </div>
 
 <div style="background-color: #B9E9C9">
-Even Lighter Green
+Even Lighter Green (#B9E9C9)
 </div>
 
 <div style="background-color: #FFFFFF">
-White
+White (#FFFFFF)
 </div>
 
 ## Secondary Brand Colors
 
 <div style="background-color: #A459FF">
-Purple
+Purple (#A459FF)
 </div>
 
 <div style="background-color: #FFEB3B">
-Yellow
+Yellow (#FFEB3B)
 </div>
 
 <div style="background-color: #F0F0F0">
-Soft Gray
+Soft Gray (#F0F0F0)
 </div>
 
 <div style="background-color: #FF4081">
-Magenta
+Magenta (#FF4081)
 </div>
 
 <div style="background-color: #1A1A40">
-Dark Navy
+Dark Navy (#1A1A40)
 </div>
 
 <div style="background-color: #20C997">
-Teal
+Teal (#20C997)
 </div>
 
 ## Primary Style Applications

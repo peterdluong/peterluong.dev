@@ -1,0 +1,17 @@
+.PLButton {
+  background-color: #50C878;
+  color: white;
+  border-color: white;
+  border-width: 5px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  height: 40px;
+  width: 80px;
+}
+
+.PLButton:hover {
+  background-color: white;
+  color: #50C878;
+  border-color: #50C878;
+  /* rotate: 30deg; */
+}

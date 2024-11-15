@@ -9,13 +9,34 @@ import { FunPage } from "./app/pages/Fun";
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/projects" element={<ProjectsPage />} />
-      <Route path="/resume" element={<ResumePage />} />
-      <Route path="/fun" element={<FunPage />} />
-    </Routes>
+    <div>
+      <nav>
+        <ul>
+          <li>
+            <Link to={"/"}>Home</Link>
+          </li>
+          <li>
+            <Link to={"/about"}>About</Link>
+          </li>
+          <li>
+            <Link to={"/projects"}>Projects</Link>
+          </li>
+          <li>
+            <Link to={"/resume"}>Resume</Link>
+          </li>
+          <li>
+            <Link to={"/fun"}>Fun</Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/resume" element={<ResumePage />} />
+        <Route path="/fun" element={<FunPage />} />
+      </Routes>
+    </div>
   );
 };
 
