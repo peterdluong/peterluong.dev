@@ -42,9 +42,36 @@ const Box = (props: BoxProps) => {
   );
 };
 
-const TestModel = () => {
-  const { scene } = useGLTF("MacbookPro_edited.glb");
-  return <primitive object={scene} />;
+interface TestModelProps {
+  modelPath: string;
+}
+
+const TestModel = (props: TestModelProps) => {
+  const meshRef = useRef<Mesh>(null);
+  const { scene } = useGLTF(props.modelPath);
+
+  const count = useRef(0);
+
+  useFrame(() => {
+    if (!meshRef.current) {
+      return;
+    }
+    count.current++;
+    if (count.current <= 50) {
+      meshRef.current.rotation.x -= 0.5;
+      meshRef.current.rotation.y += 0.25;
+    } else if (count.current < 100) {
+      meshRef.current.rotation.x += 0.25;
+      meshRef.current.rotation.y -= 0.5;
+    } else {
+      count.current = 1;
+    }
+  });
+  return (
+    <mesh ref={meshRef}>
+      <primitive object={scene} />
+    </mesh>
+  );
 };
 
 export const Three = () => {
@@ -64,7 +91,7 @@ export const Three = () => {
       >
         <Canvas color="black">
           <OrbitControls minDistance={2} maxDistance={15} />
-          <ambientLight intensity={3} />
+          <ambientLight intensity={5} />
           <directionalLight position={[10, 10, 10]} intensity={3} />
           <Box autoRotate={false} />
         </Canvas>
@@ -82,7 +109,7 @@ export const Three = () => {
         }}
       >
         <Canvas>
-          <ambientLight intensity={1} />
+          <ambientLight />
           <directionalLight position={[10, 10, 10]} intensity={1} />
           <Box autoRotate={true} />
         </Canvas>
@@ -101,10 +128,31 @@ export const Three = () => {
       >
         <Canvas>
           <OrbitControls minDistance={1} maxDistance={15} />
-          <ambientLight intensity={1} />
-          <directionalLight position={[10, 10, 10]} intensity={1} />
+          <ambientLight intensity={3} />
+          <directionalLight position={[10, 10, 10]} intensity={5} />
           <Suspense fallback={null}>
-            <TestModel />
+            <TestModel modelPath={"Macbook Pro.glb"} />
+          </Suspense>
+        </Canvas>
+      </div>
+      <div
+        style={{
+          border: "1px solid black",
+          height: "300px",
+          width: "50%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "10px",
+        }}
+      >
+        <Canvas>
+          <OrbitControls minDistance={1} maxDistance={15} />
+          <ambientLight intensity={3} />
+          <directionalLight position={[10, 10, 10]} intensity={5} />
+          <Suspense fallback={null}>
+            <TestModel modelPath={"pokemon/Pikachu.glb"} />
           </Suspense>
         </Canvas>
       </div>
