@@ -31,12 +31,12 @@ export const HomePage = () => {
         <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           Learn React
         </a>
-        <Link to={"/projects"}>
+        {/* <Link to={"/projects"}>
           <PLButton style={{ margin: 20 }}>Projects</PLButton>
-        </Link>
-        <div style={{ width: "500px" }}>
+        </Link> */}
+        {/* <div style={{ width: "500px" }}>
           <SegmentedProgressBar numSegments={maxSegments.current} currentSegment={segments} />
-        </div>
+        </div> */}
       </header>
     </div>
   );

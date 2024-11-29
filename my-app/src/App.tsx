@@ -8,11 +8,12 @@ import { ResumePage } from "./app/pages/Resume";
 import { FunPage } from "./app/pages/Fun";
 import { NavBar } from "./components/NavBar";
 import { Three } from "./app/pages/Three";
+import { CanvasBackground } from "./components/CanvasBackground";
 
 const App = () => {
   return (
     <div>
-      <nav style={{ backgroundColor: "#282c34" }}>
+      <nav>
         <NavBar />
       </nav>
       <Routes>
