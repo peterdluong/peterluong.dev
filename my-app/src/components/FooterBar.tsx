@@ -7,8 +7,6 @@ export const FooterBar = () => {
         position: "absolute",
         right: 0,
         bottom: 0,
-        height: "100px",
-        width: "100px",
       }}
     >
       <ThemeToggle />

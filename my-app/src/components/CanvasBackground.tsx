@@ -22,8 +22,9 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
   let mouseX = 0; // Mouse x position
   let mouseY = 0; // Mouse y position
 
-  const MAX_SPEED = 1.5; // Maximum speed of circles
   const resolution = 2;
+  const maxSpeed = 1.5; // Maximum speed of circles
+  const attractionStrength = 0.01; // Attraction effect multiplier
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -86,16 +87,15 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
         const distance = Math.sqrt(distX ** 2 + distY ** 2);
 
         if (distance < 100 * resolution) {
-          const attractionStrength = 0.01; // Attraction effect multiplier
           circle.dx += (distX / distance) * attractionStrength;
           circle.dy += (distY / distance) * attractionStrength;
         }
 
         // Cap the speed of the circle
         const speed = Math.sqrt(circle.dx ** 2 + circle.dy ** 2);
-        if (speed > MAX_SPEED) {
-          circle.dx = (circle.dx / speed) * MAX_SPEED;
-          circle.dy = (circle.dy / speed) * MAX_SPEED;
+        if (speed > maxSpeed) {
+          circle.dx = (circle.dx / speed) * maxSpeed;
+          circle.dy = (circle.dy / speed) * maxSpeed;
         }
 
         context.beginPath();
