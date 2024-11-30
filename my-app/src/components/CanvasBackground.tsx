@@ -23,8 +23,10 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
   let mouseY = 0; // Mouse y position
 
   const resolution = 2;
-  const maxSpeed = 1.5; // Maximum speed of circles
+  const maxSpeed = 2 * resolution; // Maximum speed of circles
+  const minSpeed = 0.15 * resolution; // Minimum speed of circles
   const attractionStrength = 0.01; // Attraction effect multiplier
+  const friction = 0.999; // Speed reduction factor (friction)
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -91,8 +93,19 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
           circle.dy += (distY / distance) * attractionStrength;
         }
 
-        // Cap the speed of the circle
+        // Apply friction to slow down the circles gradually
+        circle.dx *= friction;
+        circle.dy *= friction;
+
+        // Ensure the speed doesn't drop below the minimum speed
         const speed = Math.sqrt(circle.dx ** 2 + circle.dy ** 2);
+        if (speed < minSpeed) {
+          const angle = Math.atan2(circle.dy, circle.dx);
+          circle.dx = Math.cos(angle) * minSpeed;
+          circle.dy = Math.sin(angle) * minSpeed;
+        }
+
+        // Cap the speed to the maximum speed
         if (speed > maxSpeed) {
           circle.dx = (circle.dx / speed) * maxSpeed;
           circle.dy = (circle.dy / speed) * maxSpeed;
