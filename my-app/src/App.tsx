@@ -9,6 +9,7 @@ import { FunPage } from "./app/pages/Fun";
 import { NavBar } from "./components/NavBar";
 import { Three } from "./app/pages/Three";
 import { CanvasBackground } from "./components/CanvasBackground";
+import { FooterBar } from "./components/FooterBar";
 
 const App = () => {
   return (
@@ -24,6 +25,9 @@ const App = () => {
         <Route path="/fun" element={<FunPage />} />
         <Route path="/three" element={<Three />} />
       </Routes>
+      <footer>
+        <FooterBar />
+      </footer>
     </div>
   );
 };

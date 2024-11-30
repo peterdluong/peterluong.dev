@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import "./CanvasBackground.css";
+import "./styles/CanvasBackground.css";
+import { getRandomInt, getRandomNum } from "../utils/utils";
 
 interface CanvasBackgroundProps {}
 
@@ -14,42 +15,29 @@ interface circleProps {
 
 export const CanvasBackground = (props: CanvasBackgroundProps) => {
   const [theme, setTheme] = useState("light");
-  const [resolution, set] = useState(2);
-  const [circleColor, setCircleColor] = useState("235, 245, 251");
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let animationRef = useRef<number | null>(null);
 
-  // useEffect(() => {
-  //   if (!canvasRef.current) return;
+  let mouseX = 0; // Mouse x position
+  let mouseY = 0; // Mouse y position
 
-  //   let mainContext = canvasRef.current.getContext("2d");
-  //   let circlesArray = new Array();
-
-  //   const animate = () => {
-  //     animationRef.current = requestAnimationFrame(animate);
-  //   };
-  //   animationRef.current = requestAnimationFrame(animate);
-
-  //   return () => cancelAnimationFrame(animationRef.current!);
-  // }, []);
+  const MAX_SPEED = 1.5; // Maximum speed of circles
+  const resolution = 2;
 
   useEffect(() => {
     if (!canvasRef.current) return;
-    // canvasRef.current.height = canvasRef.current.height * 2;
-    // canvasRef.current.width = canvasRef.current.width * 2;
-
     const canvas = canvasRef.current;
 
     const circles: circleProps[] = [];
     const canvasArea = canvas.height * canvas.width;
-    const numCirclesMin = canvasArea / 10000;
-    const numCirclesMax = canvasArea / 9000;
-    const numCircles = (Math.random() * (numCirclesMax - numCirclesMin) + numCirclesMin) / Math.pow(resolution, 2);
+    const numCirclesMin = canvasArea / 11000;
+    const numCirclesMax = canvasArea / 10000;
+    const numCircles = getRandomInt(numCirclesMin, numCirclesMax) / resolution ** 2;
 
     for (let i = 0; i < numCircles; i++) {
       let randomColor: string;
-      switch (Math.floor(Math.random() * (3 - 0 + 1) + 0)) {
+      switch (getRandomInt(0, 3)) {
         case 0:
           randomColor = "235, 245, 251";
           break;
@@ -67,16 +55,22 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
           break;
       }
       circles.push({
-        x: Math.round(-100 + Math.random() * canvas.width),
-        y: Math.round(-100 + Math.random() * canvas.height),
-        radius: (Math.random() * (40 - 1) + 1) * resolution,
+        x: getRandomInt(-100, canvas.width + 100),
+        y: getRandomInt(-100, canvas.height + 100),
+        radius: getRandomNum(1, 40) * resolution,
         dx: (Math.random() - 0.5) * 0.15 * resolution,
         dy: (Math.random() - 0.5) * 0.15 * resolution,
-        color: `rgba(${randomColor}, ${
-          Math.random() * (theme == "dark" ? 0.25 : 0.25) + (theme == "dark" ? 0.02 : 0.25)
-        })`,
+        color: `rgba(${randomColor}, ${theme === "dark" ? getRandomNum(0.02, 0.2) : getRandomNum(0.25, 0.5)})`,
       });
     }
+
+    const handleMouseMove = (event: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = (event.clientX - rect.left) * resolution;
+      mouseY = (event.clientY - rect.top) * resolution;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
 
     const animate = () => {
       const context = canvas.getContext("2d")!;
@@ -86,6 +80,24 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       for (const circle of circles) {
+        // Attraction effect based on mouse position
+        const distX = mouseX - circle.x;
+        const distY = mouseY - circle.y;
+        const distance = Math.sqrt(distX ** 2 + distY ** 2);
+
+        if (distance < 100 * resolution) {
+          const attractionStrength = 0.01; // Attraction effect multiplier
+          circle.dx += (distX / distance) * attractionStrength;
+          circle.dy += (distY / distance) * attractionStrength;
+        }
+
+        // Cap the speed of the circle
+        const speed = Math.sqrt(circle.dx ** 2 + circle.dy ** 2);
+        if (speed > MAX_SPEED) {
+          circle.dx = (circle.dx / speed) * MAX_SPEED;
+          circle.dy = (circle.dy / speed) * MAX_SPEED;
+        }
+
         context.beginPath();
         context.arc(circle.x, circle.y, circle.radius, 0, 2 * Math.PI);
         context.fillStyle = circle.color;
@@ -105,7 +117,10 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
     };
     animationRef.current = requestAnimationFrame(animate);
 
-    return () => cancelAnimationFrame(animationRef.current!);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(animationRef.current!);
+    };
   }, []);
 
   return (

@@ -13,8 +13,8 @@
 
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  /* background-color: #282c34; */
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,4 +34,15 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Custom CSS */
+
+.glass { 
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }

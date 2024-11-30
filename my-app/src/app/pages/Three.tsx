@@ -58,11 +58,11 @@ const TestModel = (props: TestModelProps) => {
     }
     count.current++;
     if (count.current <= 50) {
-      meshRef.current.rotation.x -= 0.5;
-      meshRef.current.rotation.y += 0.25;
+      meshRef.current.rotation.x -= 0.125;
+      meshRef.current.rotation.y += 0.0625;
     } else if (count.current < 100) {
-      meshRef.current.rotation.x += 0.25;
-      meshRef.current.rotation.y -= 0.5;
+      meshRef.current.rotation.x += 0.0625;
+      meshRef.current.rotation.y -= 0.125;
     } else {
       count.current = 1;
     }
@@ -87,6 +87,7 @@ export const Three = () => {
           justifyContent: "center",
           alignItems: "center",
           margin: "10px",
+          backgroundColor: "white",
         }}
       >
         <Canvas color="black">
@@ -106,6 +107,7 @@ export const Three = () => {
           justifyContent: "center",
           alignItems: "center",
           margin: "10px",
+          backgroundColor: "white",
         }}
       >
         <Canvas>
@@ -124,6 +126,7 @@ export const Three = () => {
           justifyContent: "center",
           alignItems: "center",
           margin: "10px",
+          backgroundColor: "white",
         }}
       >
         <Canvas>
@@ -145,6 +148,7 @@ export const Three = () => {
           justifyContent: "center",
           alignItems: "center",
           margin: "10px",
+          backgroundColor: "white",
         }}
       >
         <Canvas>

@@ -1,5 +1,5 @@
 import { CSSProperties, ReactNode } from "react";
-import "./SegmentedProgressBar.css";
+import "./styles/SegmentedProgressBar.css";
 
 type SegmentedProgressBarProps = {
   style?: CSSProperties;

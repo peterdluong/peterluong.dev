@@ -1,5 +1,5 @@
 import { CSSProperties, ReactNode } from "react";
-import "./PLButton.css";
+import "./styles/PLButton.css";
 
 type PLButtonProps = {
   style?: CSSProperties;
