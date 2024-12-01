@@ -1,16 +1,16 @@
 import { useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { setMode } from "../redux/slices/themeSlice";
 
 export const ThemeToggle = () => {
-  const [theme, setTheme] = useState("light");
-
-  const handleThemeChange = useCallback((theme: string) => {
-    setTheme(theme);
-  }, []);
+  const theme = useSelector((state: RootState) => state.theme.value);
+  const dispatch = useDispatch();
 
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       <div
-        onClick={() => handleThemeChange("light")}
+        onClick={() => dispatch(setMode("light"))}
         style={{
           backgroundColor: theme === "light" ? "orange" : "gray",
           color: "white",
@@ -23,10 +23,10 @@ export const ThemeToggle = () => {
           justifyContent: "center",
         }}
       >
-        <a>Day</a>
+        <a style={{ cursor: "default" }}>Day</a>
       </div>
       <div
-        onClick={() => handleThemeChange("dark")}
+        onClick={() => dispatch(setMode("dark"))}
         style={{
           backgroundColor: theme === "dark" ? "blue" : "gray",
           color: "white",
@@ -39,8 +39,7 @@ export const ThemeToggle = () => {
           justifyContent: "center",
         }}
       >
-        {" "}
-        <a>Night</a>
+        <a style={{ cursor: "default" }}>Night</a>
       </div>
     </div>
   );

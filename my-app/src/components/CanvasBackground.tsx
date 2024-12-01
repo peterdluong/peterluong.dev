@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "./styles/CanvasBackground.css";
 import { getRandomInt, getRandomNum } from "../utils/utils";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 interface CanvasBackgroundProps {}
 
@@ -14,7 +16,7 @@ interface circleProps {
 }
 
 export const CanvasBackground = (props: CanvasBackgroundProps) => {
-  const [theme, setTheme] = useState("light");
+  const theme = useSelector((state: RootState) => state.theme.value);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let animationRef = useRef<number | null>(null);
@@ -143,7 +145,11 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
         ref={canvasRef}
         width={window.screen.availWidth * resolution}
         height={window.screen.availHeight * resolution}
-        style={{ width: "100%", height: "100%", backgroundColor: theme === "dark" ? "#1A1A1A" : "#E0E0E0" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundColor: theme === "dark" ? "rgba(26,26,26,1)" : "rgba(224,224,224,1)",
+        }}
       ></canvas>
     </div>
   );
