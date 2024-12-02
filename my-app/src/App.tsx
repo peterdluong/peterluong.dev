@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { HomePage } from "./app/pages/Home";
 import { ProjectsPage } from "./app/pages/Projects";
@@ -8,7 +8,6 @@ import { ResumePage } from "./app/pages/Resume";
 import { FunPage } from "./app/pages/Fun";
 import { NavBar } from "./components/NavBar";
 import { Three } from "./app/pages/Three";
-import { CanvasBackground } from "./components/CanvasBackground";
 import { FooterBar } from "./components/FooterBar";
 
 const App = () => {

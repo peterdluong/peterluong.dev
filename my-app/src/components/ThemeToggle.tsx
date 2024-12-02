@@ -1,4 +1,3 @@
-import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { setMode } from "../redux/slices/themeSlice";

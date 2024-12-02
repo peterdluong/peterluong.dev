@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import "./styles/CanvasBackground.css";
 import { getRandomInt, getRandomNum } from "../utils/utils";
 import { useSelector } from "react-redux";
@@ -148,7 +148,7 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
         style={{
           width: "100%",
           height: "100%",
-          backgroundColor: theme === "dark" ? "rgba(26,26,26,1)" : "rgba(224,224,224,1)",
+          backgroundColor: theme === "dark" ? "#1A1A1A" : "#E0E0E0",
         }}
       ></canvas>
     </div>

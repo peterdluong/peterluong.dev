@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
-import { PLButton } from "../../components/PLButton";
 import logo from "../../logo.svg";
-import { SegmentedProgressBar } from "../../components/SegmentedProgressBar";
 import { useEffect, useRef, useState } from "react";
 
 export const HomePage = () => {
