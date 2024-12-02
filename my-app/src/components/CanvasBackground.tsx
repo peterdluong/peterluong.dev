@@ -60,8 +60,8 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
           break;
       }
       circles.push({
-        x: getRandomInt(-100, canvas.width + 100),
-        y: getRandomInt(-100, canvas.height + 100),
+        x: getRandomInt(50, canvas.width - 50),
+        y: getRandomInt(50, canvas.height - 50),
         radius: getRandomNum(1, 40) * resolution,
         dx: (Math.random() - 0.5) * 0.15 * resolution,
         dy: (Math.random() - 0.5) * 0.15 * resolution,

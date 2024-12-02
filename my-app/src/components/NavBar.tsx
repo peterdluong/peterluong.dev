@@ -14,7 +14,7 @@ export const NavBar = () => {
         <PLButton>Projects</PLButton>
       </Link>
       <Link to={"/resume"}>
-        <PLButton>Resune</PLButton>
+        <PLButton>Resume</PLButton>
       </Link>
       <Link to={"/fun"}>
         <PLButton>Fun</PLButton>
