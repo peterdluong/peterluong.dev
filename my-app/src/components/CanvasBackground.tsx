@@ -30,6 +30,7 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
 
   let mouseX = 0; // Mouse x position
   let mouseY = 0; // Mouse y position
+  let isMouseOnScreen = false; // Track if the mouse is on the screen
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -77,9 +78,15 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
       const rect = canvas.getBoundingClientRect();
       mouseX = (event.clientX - rect.left) * RESOLUTION;
       mouseY = (event.clientY - rect.top) * RESOLUTION;
+      isMouseOnScreen = true;
+    };
+
+    const handleMouseLeave = () => {
+      isMouseOnScreen = false; // Mouse is no longer on the screen
     };
 
     window.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseout", handleMouseLeave);
 
     const animate = () => {
       const context = canvas.getContext("2d")!;
@@ -89,14 +96,16 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       for (const circle of circlesRef.current) {
-        // Attraction effect based on mouse position
-        const distX = mouseX - circle.x;
-        const distY = mouseY - circle.y;
-        const distance = Math.sqrt(distX ** 2 + distY ** 2);
+        if (isMouseOnScreen) {
+          // Attraction effect based on mouse position
+          const distX = mouseX - circle.x;
+          const distY = mouseY - circle.y;
+          const distance = Math.sqrt(distX ** 2 + distY ** 2);
 
-        if (distance < 100 * RESOLUTION) {
-          circle.dx += (distX / distance) * ATTRACTION_STRENGTH;
-          circle.dy += (distY / distance) * ATTRACTION_STRENGTH;
+          if (distance < 100 * RESOLUTION) {
+            circle.dx += (distX / distance) * ATTRACTION_STRENGTH;
+            circle.dy += (distY / distance) * ATTRACTION_STRENGTH;
+          }
         }
 
         // Apply FRICTION to slow down the circles gradually
@@ -138,6 +147,7 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseout", handleMouseLeave);
       cancelAnimationFrame(animationRef.current!);
     };
   }, []);
