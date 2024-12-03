@@ -13,32 +13,35 @@ interface circleProps {
   dx: number;
   dy: number;
   color: string;
+  opacity: number;
 }
+
+const RESOLUTION = 2;
+const MAX_SPEED = 2 * RESOLUTION;
+const MIN_SPEED = 0.15 * RESOLUTION;
+const ATTRACTION_STRENGTH = 0.005 * RESOLUTION;
+const FRICTION = 0.999;
 
 export const CanvasBackground = (props: CanvasBackgroundProps) => {
   const theme = useSelector((state: RootState) => state.theme.value);
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const circlesRef = useRef<circleProps[]>([]);
   let animationRef = useRef<number | null>(null);
 
   let mouseX = 0; // Mouse x position
   let mouseY = 0; // Mouse y position
 
-  const resolution = 2;
-  const maxSpeed = 2 * resolution; // Maximum speed of circles
-  const minSpeed = 0.15 * resolution; // Minimum speed of circles
-  const attractionStrength = 0.01; // Attraction effect multiplier
-  const friction = 0.999; // Speed reduction factor (friction)
-
   useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
-
-    const circles: circleProps[] = [];
     const canvasArea = canvas.height * canvas.width;
+
     const numCirclesMin = canvasArea / 11000;
     const numCirclesMax = canvasArea / 10000;
-    const numCircles = getRandomInt(numCirclesMin, numCirclesMax) / resolution ** 2;
+    const numCircles = getRandomInt(numCirclesMin, numCirclesMax) / RESOLUTION ** 2;
+
+    // const circles: circleProps[] = [];
+    circlesRef.current = [];
 
     for (let i = 0; i < numCircles; i++) {
       let randomColor: string;
@@ -59,63 +62,64 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
           randomColor = "235, 245, 251";
           break;
       }
-      circles.push({
+      circlesRef.current.push({
         x: getRandomInt(50, canvas.width - 50),
         y: getRandomInt(50, canvas.height - 50),
-        radius: getRandomNum(1, 40) * resolution,
-        dx: (Math.random() - 0.5) * 0.15 * resolution,
-        dy: (Math.random() - 0.5) * 0.15 * resolution,
-        color: `rgba(${randomColor}, ${theme === "dark" ? getRandomNum(0.02, 0.2) : getRandomNum(0.25, 0.5)})`,
+        radius: getRandomNum(1, 40) * RESOLUTION,
+        dx: (Math.random() - 0.5) * 0.15 * RESOLUTION,
+        dy: (Math.random() - 0.5) * 0.15 * RESOLUTION,
+        color: randomColor, // `rgba(${randomColor}, ${theme === "dark" ? getRandomNum(0.02, 0.2) : getRandomNum(0.25, 0.5)})`,
+        opacity: theme === "dark" ? getRandomNum(0.02, 0.2) : getRandomNum(0.27, 0.45),
       });
     }
 
     const handleMouseMove = (event: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      mouseX = (event.clientX - rect.left) * resolution;
-      mouseY = (event.clientY - rect.top) * resolution;
+      mouseX = (event.clientX - rect.left) * RESOLUTION;
+      mouseY = (event.clientY - rect.top) * RESOLUTION;
     };
 
     window.addEventListener("mousemove", handleMouseMove);
 
     const animate = () => {
       const context = canvas.getContext("2d")!;
-      context.canvas.width = window.innerWidth * resolution;
-      context.canvas.height = window.innerHeight * resolution;
+      context.canvas.width = window.innerWidth * RESOLUTION;
+      context.canvas.height = window.innerHeight * RESOLUTION;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
 
-      for (const circle of circles) {
+      for (const circle of circlesRef.current) {
         // Attraction effect based on mouse position
         const distX = mouseX - circle.x;
         const distY = mouseY - circle.y;
         const distance = Math.sqrt(distX ** 2 + distY ** 2);
 
-        if (distance < 100 * resolution) {
-          circle.dx += (distX / distance) * attractionStrength;
-          circle.dy += (distY / distance) * attractionStrength;
+        if (distance < 100 * RESOLUTION) {
+          circle.dx += (distX / distance) * ATTRACTION_STRENGTH;
+          circle.dy += (distY / distance) * ATTRACTION_STRENGTH;
         }
 
-        // Apply friction to slow down the circles gradually
-        circle.dx *= friction;
-        circle.dy *= friction;
+        // Apply FRICTION to slow down the circles gradually
+        circle.dx *= FRICTION;
+        circle.dy *= FRICTION;
 
         // Ensure the speed doesn't drop below the minimum speed
         const speed = Math.sqrt(circle.dx ** 2 + circle.dy ** 2);
-        if (speed < minSpeed) {
+        if (speed < MIN_SPEED) {
           const angle = Math.atan2(circle.dy, circle.dx);
-          circle.dx = Math.cos(angle) * minSpeed;
-          circle.dy = Math.sin(angle) * minSpeed;
+          circle.dx = Math.cos(angle) * MIN_SPEED;
+          circle.dy = Math.sin(angle) * MIN_SPEED;
         }
 
         // Cap the speed to the maximum speed
-        if (speed > maxSpeed) {
-          circle.dx = (circle.dx / speed) * maxSpeed;
-          circle.dy = (circle.dy / speed) * maxSpeed;
+        if (speed > MAX_SPEED) {
+          circle.dx = (circle.dx / speed) * MAX_SPEED;
+          circle.dy = (circle.dy / speed) * MAX_SPEED;
         }
 
         context.beginPath();
         context.arc(circle.x, circle.y, circle.radius, 0, 2 * Math.PI);
-        context.fillStyle = circle.color;
+        context.fillStyle = `rgba(${circle.color}, ${circle.opacity})`;
         context.fill();
 
         circle.x += circle.dx;
@@ -138,13 +142,29 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
     };
   }, []);
 
+  useEffect(() => {
+    circlesRef.current.forEach((circle) => {
+      if (theme === "light") {
+        if (circle.opacity < 0.25) {
+          setTimeout(() => {
+            circle.opacity += 0.25;
+          }, 250);
+        }
+      } else if (theme === "dark") {
+        if (circle.opacity > 0.25) {
+          circle.opacity -= 0.25;
+        }
+      }
+    });
+  }, [theme]);
+
   return (
     <div id="circles-js" style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: -1 }}>
       <canvas
         id="canvasBackground"
         ref={canvasRef}
-        width={window.screen.availWidth * resolution}
-        height={window.screen.availHeight * resolution}
+        width={window.screen.availWidth * RESOLUTION}
+        height={window.screen.availHeight * RESOLUTION}
         style={{
           width: "100%",
           height: "100%",
