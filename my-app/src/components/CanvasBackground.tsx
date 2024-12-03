@@ -28,10 +28,6 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
   const circlesRef = useRef<circleProps[]>([]);
   let animationRef = useRef<number | null>(null);
 
-  let mouseX = 0; // Mouse x position
-  let mouseY = 0; // Mouse y position
-  let isMouseOnScreen = false; // Track if the mouse is on the screen
-
   useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
@@ -40,6 +36,10 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
     const numCirclesMin = canvasArea / 11000;
     const numCirclesMax = canvasArea / 10000;
     const numCircles = getRandomInt(numCirclesMin, numCirclesMax) / RESOLUTION ** 2;
+
+    let mouseX = 0; // Mouse x position
+    let mouseY = 0; // Mouse y position
+    let isMouseOnScreen = false; // Track if the mouse is on the screen
 
     // const circles: circleProps[] = [];
     circlesRef.current = [];
@@ -161,9 +161,7 @@ export const CanvasBackground = (props: CanvasBackgroundProps) => {
           }, 250);
         }
       } else if (theme === "dark") {
-        if (circle.opacity > 0.25) {
-          circle.opacity -= 0.25;
-        }
+        if (circle.opacity > 0.25) circle.opacity -= 0.25;
       }
     });
   }, [theme]);
