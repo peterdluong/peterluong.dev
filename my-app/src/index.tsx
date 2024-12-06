@@ -8,6 +8,10 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { CanvasBackground } from "./components/CanvasBackground";
 import { PersistGate } from "redux-persist/integration/react";
+import { FooterBar } from "./components/FooterBar";
+import { Placeholder } from "./app/pages/Placeholder";
+
+const wip = false;
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
@@ -16,7 +20,10 @@ root.render(
       <PersistGate persistor={persistor}>
         <BrowserRouter>
           <CanvasBackground />
-          <App />
+          {wip ? <App /> : <Placeholder />}
+          <footer>
+            <FooterBar />
+          </footer>
         </BrowserRouter>
       </PersistGate>
     </Provider>
