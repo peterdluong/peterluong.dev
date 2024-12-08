@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "0.1.0",
-  "homepage": "https://peterdluong.github.io/peterluong.dev",
+  "homepage": "https://peterluong.dev",
   "private": true,
   "dependencies": {
     "@react-three/drei": "^9.117.1",
@@ -28,7 +28,7 @@
   },
   "scripts": {
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d build --add-cname",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
