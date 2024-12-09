@@ -3,6 +3,7 @@ import { Suspense, useRef, useState } from "react";
 import { BoxGeometry, Mesh } from "three";
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { BrandPrimaryColors } from "../../assets/Brand";
+import { ThreeSection } from "../../components/ThreeSection";
 
 interface BoxProps {
   props?: ThreeElements["mesh"];
@@ -77,6 +78,7 @@ const TestModel = (props: TestModelProps) => {
 export const Three = () => {
   return (
     <div style={{ flexDirection: "column", display: "flex", alignItems: "center" }}>
+      <ThreeSection />
       <div
         style={{
           border: "1px solid black",
