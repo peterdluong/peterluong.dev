@@ -11,7 +11,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { FooterBar } from "./components/FooterBar";
 import { Placeholder } from "./app/pages/Placeholder";
 
-const wip = false;
+const wip = true;
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
