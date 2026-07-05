@@ -1,17 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;1,6..12,400&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer base {
+  :root {
+    /* Neutrals tuned toward the brand's greens and navy. */
+    --background: 140 30% 99%;
+    --foreground: 240 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 25% 15%;
+
+    /* Primary = brand green (#50C878). */
+    --primary: 140 52% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary = soft green tint. */
+    --secondary: 140 40% 94%;
+    --secondary-foreground: 140 52% 22%;
+
+    --muted: 140 16% 95%;
+    --muted-foreground: 240 8% 42%;
+
+    /* Accent = light green wash. */
+    --accent: 140 45% 92%;
+    --accent-foreground: 140 52% 22%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 140 16% 88%;
+    --input: 140 16% 88%;
+    --ring: 140 52% 55%;
+
+    --radius: 0.5rem;
+
+    /* Raw brand palette (from README.md) as HSL. */
+    --brand-green: 140 52% 55%; /* #50C878 */
+    --brand-orange: 25 95% 66%; /* #FB9A54 */
+    --brand-blue: 194 100% 50%; /* #00C5FF */
+    --brand-dark-green: 140 52% 37%; /* #2D8F4E */
+    --brand-light-green: 140 52% 64%; /* #73D393 */
+    --brand-lightest-green: 140 52% 82%; /* #B9E9C9 */
+    --brand-purple: 267 100% 67%; /* #A459FF */
+    --brand-yellow: 54 100% 62%; /* #FFEB3B */
+    --brand-magenta: 340 100% 63%; /* #FF4081 */
+    --brand-navy: 240 42% 18%; /* #1A1A40 */
+    --brand-teal: 162 73% 46%; /* #20C997 */
+
+    /* Charts use the brand palette in order. */
+    --chart-1: 140 52% 55%;
+    --chart-2: 25 95% 66%;
+    --chart-3: 194 100% 50%;
+    --chart-4: 267 100% 67%;
+    --chart-5: 162 73% 46%;
+  }
+
+  .dark {
+    /* Grounded in the brand's Dark Navy (#1A1A40). */
+    --background: 240 35% 12%;
+    --foreground: 140 20% 96%;
+
+    --card: 240 32% 15%;
+    --card-foreground: 140 20% 96%;
+
+    --popover: 240 32% 15%;
+    --popover-foreground: 140 20% 96%;
+
+    --primary: 140 52% 55%;
+    --primary-foreground: 240 35% 10%;
+
+    --secondary: 240 25% 20%;
+    --secondary-foreground: 140 20% 96%;
+
+    --muted: 240 22% 20%;
+    --muted-foreground: 240 12% 68%;
+
+    --accent: 240 25% 23%;
+    --accent-foreground: 140 20% 96%;
+
+    --destructive: 0 62% 46%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 22% 24%;
+    --input: 240 22% 24%;
+    --ring: 140 52% 55%;
+
+    --brand-lightest-green: 140 40% 40%;
+    --brand-navy: 240 42% 18%;
+
+    --chart-1: 140 52% 60%;
+    --chart-2: 25 95% 66%;
+    --chart-3: 194 100% 55%;
+    --chart-4: 267 100% 72%;
+    --chart-5: 162 73% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }

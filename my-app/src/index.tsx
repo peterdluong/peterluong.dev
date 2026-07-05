@@ -10,6 +10,7 @@ import { CanvasBackground } from "./components/CanvasBackground";
 import { PersistGate } from "redux-persist/integration/react";
 import { FooterBar } from "./components/FooterBar";
 import { Placeholder } from "./app/pages/Placeholder";
+import { ThemeSync } from "./components/ThemeSync";
 
 const wip = true;
 
@@ -19,6 +20,7 @@ root.render(
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <BrowserRouter>
+          <ThemeSync />
           <CanvasBackground />
           {wip ? <App /> : <Placeholder />}
           <footer>

@@ -1,15 +1,5 @@
-import { ThemeToggle } from "./ThemeToggle";
-
+// The theme toggle now lives in the NavBar, so the FooterBar no longer renders
+// a floating Day/Night switch. Kept as a placeholder for future footer content.
 export const FooterBar = () => {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        right: 0,
-        bottom: 0,
-      }}
-    >
-      <ThemeToggle />
-    </div>
-  );
+  return null;
 };

@@ -8,13 +8,12 @@ import { ResumePage } from "./app/pages/Resume";
 import { FunPage } from "./app/pages/Fun";
 import { NavBar } from "./components/NavBar";
 import { Three } from "./app/pages/Three";
+import { StyleGuidePage } from "./app/pages/StyleGuide";
 
 const App = () => {
   return (
     <div>
-      <nav>
-        <NavBar />
-      </nav>
+      <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
@@ -22,6 +21,7 @@ const App = () => {
         <Route path="/resume" element={<ResumePage />} />
         <Route path="/fun" element={<FunPage />} />
         <Route path="/three" element={<Three />} />
+        <Route path="/styleguide" element={<StyleGuidePage />} />
       </Routes>
     </div>
   );
