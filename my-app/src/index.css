@@ -105,6 +105,9 @@
 @layer base {
   * {
     @apply border-border;
+    /* Prevent Chrome's scroll anchoring from yanking the viewport down the
+       page when web fonts swap in and reflow content above the fold. */
+    overflow-anchor: none;
   }
   body {
     @apply bg-background text-foreground font-sans;

@@ -9,10 +9,12 @@ import { FunPage } from "./app/pages/Fun";
 import { NavBar } from "./components/NavBar";
 import { Three } from "./app/pages/Three";
 import { StyleGuidePage } from "./app/pages/StyleGuide";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 const App = () => {
   return (
     <div>
+      <ScrollToTop />
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />

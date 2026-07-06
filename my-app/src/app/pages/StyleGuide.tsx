@@ -76,7 +76,7 @@ import {
 } from "@/components/ui/chart";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Command,
+  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -361,6 +361,67 @@ function ProfileForm() {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
+  );
+}
+
+/**
+ * Command palettes are conventionally opened via a trigger/shortcut rather
+ * than rendered inline in the page flow. Mounting cmdk's Command permanently
+ * inline (deep in a long page) makes it auto-scroll the whole window to keep
+ * its highlighted item visible on mount — the dialog pattern below is both
+ * the realistic usage and avoids that.
+ */
+function CommandMenu() {
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen((v) => !v);
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, []);
+
+  return (
+    <>
+      <Button
+        variant="outline"
+        className="w-full max-w-md justify-between text-muted-foreground sm:w-64"
+        onClick={() => setOpen(true)}
+      >
+        Search commands…
+        <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+          <span>⌘</span>K
+        </kbd>
+      </Button>
+      <CommandDialog open={open} onOpenChange={setOpen}>
+        <CommandInput placeholder="Type a command or search..." />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandGroup heading="Suggestions">
+            <CommandItem onSelect={() => setOpen(false)}>
+              <CalendarIcon /> Calendar
+            </CommandItem>
+            <CommandItem onSelect={() => setOpen(false)}>
+              <User /> Profile
+              <CommandShortcut>⌘P</CommandShortcut>
+            </CommandItem>
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Settings">
+            <CommandItem onSelect={() => setOpen(false)}>
+              <Settings /> Settings
+            </CommandItem>
+            <CommandItem onSelect={() => setOpen(false)}>
+              <CreditCard /> Billing
+            </CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </CommandDialog>
+    </>
   );
 }
 
@@ -955,31 +1016,12 @@ export const StyleGuidePage = () => {
         </Section>
 
         {/* Command */}
-        <Section id="command" title="Command" description="Command palette (cmdk).">
-          <Command className="max-w-md rounded-lg border shadow-sm">
-            <CommandInput placeholder="Type a command or search..." />
-            <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup heading="Suggestions">
-                <CommandItem>
-                  <CalendarIcon /> Calendar
-                </CommandItem>
-                <CommandItem>
-                  <User /> Profile
-                  <CommandShortcut>⌘P</CommandShortcut>
-                </CommandItem>
-              </CommandGroup>
-              <CommandSeparator />
-              <CommandGroup heading="Settings">
-                <CommandItem>
-                  <Settings /> Settings
-                </CommandItem>
-                <CommandItem>
-                  <CreditCard /> Billing
-                </CommandItem>
-              </CommandGroup>
-            </CommandList>
-          </Command>
+        <Section
+          id="command"
+          title="Command"
+          description="Command palette (cmdk) — press ⌘K or click the trigger."
+        >
+          <CommandMenu />
         </Section>
 
         {/* Data display */}
