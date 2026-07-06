@@ -4,14 +4,7 @@ import { Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "./ThemeToggle";
 
 const NAV_LINKS = [
@@ -33,9 +26,7 @@ const Wordmark = ({ onClick }: { onClick?: () => void }) => (
     <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-brand-green to-brand-blue font-heading text-sm font-bold text-white shadow-sm">
       PL
     </span>
-    <span className="font-heading text-lg font-semibold tracking-tight">
-      Peter Luong
-    </span>
+    <span className="font-heading text-lg font-semibold tracking-tight">Peter Luong</span>
   </Link>
 );
 
@@ -44,7 +35,7 @@ const desktopLinkClasses = ({ isActive }: { isActive: boolean }) =>
     "rounded-md px-3 py-2 text-sm font-medium transition-colors",
     isActive
       ? "bg-accent text-accent-foreground"
-      : "text-muted-foreground hover:bg-accent/60 hover:text-accent-foreground"
+      : "text-muted-foreground hover:bg-accent/60 hover:text-accent-foreground",
   );
 
 const mobileLinkClasses = ({ isActive }: { isActive: boolean }) =>
@@ -52,7 +43,7 @@ const mobileLinkClasses = ({ isActive }: { isActive: boolean }) =>
     "rounded-md px-3 py-2.5 text-base font-medium transition-colors",
     isActive
       ? "bg-accent text-accent-foreground"
-      : "text-foreground/80 hover:bg-accent/60 hover:text-accent-foreground"
+      : "text-foreground/80 hover:bg-accent/60 hover:text-accent-foreground",
   );
 
 export const NavBar = () => {
@@ -67,12 +58,7 @@ export const NavBar = () => {
           {/* Desktop navigation */}
           <nav className="mr-1 hidden items-center gap-1 md:flex">
             {NAV_LINKS.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                end={link.to === "/"}
-                className={desktopLinkClasses}
-              >
+              <NavLink key={link.to} to={link.to} end={link.to === "/"} className={desktopLinkClasses}>
                 {link.label}
               </NavLink>
             ))}
@@ -83,31 +69,20 @@ export const NavBar = () => {
           {/* Mobile navigation */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden"
-                aria-label="Open navigation menu"
-              >
+              <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open navigation menu">
                 <Menu />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-72">
               <SheetHeader className="text-left">
                 <SheetTitle>
-                  <span className="font-heading text-base font-semibold">
-                    Peter Luong
-                  </span>
+                  <span className="font-heading text-base font-semibold">Peter Luong</span>
                 </SheetTitle>
               </SheetHeader>
               <nav className="mt-6 flex flex-col gap-1">
                 {NAV_LINKS.map((link) => (
                   <SheetClose asChild key={link.to}>
-                    <NavLink
-                      to={link.to}
-                      end={link.to === "/"}
-                      className={mobileLinkClasses}
-                    >
+                    <NavLink to={link.to} end={link.to === "/"} className={mobileLinkClasses}>
                       {link.label}
                     </NavLink>
                   </SheetClose>
